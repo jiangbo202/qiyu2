@@ -1,0 +1,26 @@
+syntax = "v1"
+
+info(
+    title: "type title here"
+    desc: "type desc here"
+    author: "type author here"
+    email: "type email here"
+    version: "type version here"
+)
+
+type (
+    AsynqDeferTask1Req {
+        Payload string `json:"payload"`
+    }
+    AsynqDeferTask1Res {
+        Code int `json:"code"`
+        Msg string `json:"msg"`
+    }
+)
+
+
+service qiyu-api {
+    @doc "触发异步任务"
+    @handler AsynqDeferHandler
+    post /asynq/defer/task1 (AsynqDeferTask1Req) returns (AsynqDeferTask1Res)
+}

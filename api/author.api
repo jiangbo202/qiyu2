@@ -1,0 +1,111 @@
+syntax = "v1"
+
+info(
+    title: "type title here"
+    desc: "type desc here"
+    author: "type author here"
+    email: "type email here"
+    version: "type version here"
+)
+
+type Author {
+    Name string `json:"name"`
+    Age int `json:"age"`
+    Gender string `json:"gender"`
+}
+
+type AuthorRes {
+    Author
+    Id int `json:"id"`
+    CreateAt string `json:"createAt"`
+    UpdateAt string `json:"updateAt"`
+}
+
+type (
+    AuthListReq {
+        Name string `form:"name,optional"`
+        Age int `form:"age,optional"`
+        Gender string `form:"gender,optional"`
+        Page int `form:"page,optional"`
+        PageSize int `form:"pageSize,optional"`
+    }
+    ListPaging {
+        List []AuthorRes `json:"list"`
+        Page int `json:"page"`
+        PageSize int `json:"pageSize"`
+        Total int `json:"total"`
+    }
+    AuthListRes {
+        Code int `json:"code"`
+        Msg string `json:"msg"`
+        Data ListPaging `json:"data"`
+    }
+)
+
+type (
+    AuthDetailReq {
+        Id int `path:"id"`
+    }
+    AuthDetailRes {
+        Code int `json:"code"`
+        Msg string `json:"msg"`
+        Data AuthorRes `json:"data"`
+    }
+)
+
+type (
+    AuthAddReq {
+        Author
+    }
+    AuthAddRes {
+        Code int `json:"code"`
+        Msg string `json:"msg"`
+        Data AuthorRes `json:"data"`
+    }
+)
+
+
+type (
+    AuthUpdateReq {
+        Id int `path:"id"`
+        Author
+    }
+    AuthUpdateRes {
+        Code int `json:"code"`
+        Msg string `json:"msg"`
+        Data AuthorRes `json:"data"`
+    }
+)
+
+type (
+    AuthDelReq {
+        Id int `path:"id"`
+    }
+    AuthDelRes {
+        Code int `json:"code"`
+        Msg string `json:"msg"`
+        Data AuthorRes `json:"data"`
+    }
+)
+
+service qiyu-api {
+    @doc "作者列表"
+    @handler AuthorListHandler
+    get /author/list (AuthListReq) returns (AuthListRes)
+
+    @doc "查询作者详情"
+    @handler AuthorDetailHandler
+    get /author/:id (AuthDetailReq) returns (AuthDetailRes)
+
+    @doc "添加作者"
+    @handler AuthorAddHandler
+    post /author (AuthAddReq) returns (AuthAddRes)
+
+    @doc "修改作者"
+    @handler AuthorUpdateHandler
+    put /author/:id (AuthUpdateReq) returns (AuthUpdateRes)
+
+    @doc "删除作者(单个)"
+    @handler AuthorDelHandler
+    delete /author/:id (AuthDelReq) returns (AuthDelRes)
+}

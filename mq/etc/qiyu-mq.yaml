@@ -1,0 +1,13 @@
+Name: qiyu-mq
+Host: 0.0.0.0
+Port: 7004
+Mode: dev
+
+Redis:
+  Host: 127.0.0.1:6379
+  Type: node
+  Pass: 3hcml2gaYn&Q93hM
+
+AsynqConf:
+  Queque: myQueque1
+
